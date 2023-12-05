@@ -112,5 +112,25 @@ CREATE TABLE vendedor(
 	comisiones INT
 );
 
+CREATE TABLE vendedor(
+	dni_vendedor VARCHAR(100),
+	id_vendedor INT PRIMARY KEY,
+	nom_vendedor VARCHAR(100),
+	apellido_pat_ven VARCHAR(100),
+	apellido_mat_ven VARCHAR(100),
+	comisiones INT
+);
 
-
+CREATE TABLE accion(
+	id_accion INT PRIMARY KEY,
+	fecha_inscripcion_a DATE,
+	fecha_ejecucion_ini DATE,
+	fecha_ejecucion_fin DATE,
+	comentarios VARCHAR(1000),
+	id_tipo_accion INT,
+	id_estado_accion INT,
+	id_vendedor INT,
+	FOREIGN KEY (id_tipo_accion) REFERENCES tipo_accion(id_tipo_accion),
+	FOREIGN KEY (id_estado_accion) REFERENCES estado_accion(id_estado_accion),
+	FOREIGN KEY (id_vendedor) REFERENCES vendedor(id_vendedor)
+);
