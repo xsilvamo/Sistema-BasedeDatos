@@ -1,19 +1,17 @@
---- TABLAS
-
 CREATE TABLE tipo_estructura(
 	id_tipo_estructura SERIAL PRIMARY KEY,
 	tipo_estruc VARCHAR(100)
 );
 
 CREATE TABLE divisa (
-    	id_divisa SERIAL PRIMARY KEY,
-    	nom_divisa VARCHAR(100),
+    id_divisa SERIAL PRIMARY KEY,
+    nom_divisa VARCHAR(100),
 	valor INT
 );
 
 CREATE TABLE estructura_territorial (
-    	id_estructura INT PRIMARY KEY,
-    	nom_estructura varchar(100),
+    id_estructura INT PRIMARY KEY,
+    nom_estructura varchar(100),
 	impuesto INT,
 	id_tipo_estructura INT,
 	id_divisa INT,
@@ -66,38 +64,6 @@ CREATE TABLE estado_cuenta(
 	id_estado_cuenta SERIAL PRIMARY KEY,
 	estado_cuenta VARCHAR(100)
 );
-
-CREATE TABLE situacion(
-	cod_situacion INT PRIMARY KEY,
-	nom_situacion VARCHAR(100),
-	desc_situacion VARCHAR(1000)
-);
-
-CREATE TABLE domicilio(
-	id_domicilio INT PRIMARY KEY,
-	direccion_dom VARCHAR(15),
-	fecha_alta_dom DATE,
-	fecha_baja_dom DATE,
-	id_baja INT,
-	id_tipo_dom INT,
-	id_formato_fact INT,
-	id_estructura INT,
-	FOREIGN KEY (id_tipo_dom) REFERENCES tipo_domicilio(id_tipo_dom),
-	FOREIGN KEY (id_formato_fact) REFERENCES formato_fact(id_formato_fact),
-	FOREIGN KEY (id_estructura) REFERENCES estructura_territorial(id_estructura),
-	FOREIGN KEY (id_baja) REFERENCES causa_baja(id_baja)
-);
-
-CREATE TABLE estado_domicilio(
-	id_domicilio INT,
-	cod_situacion INT,
-	fecha_desde DATE,
-	fecha_hasta DATE,
-	PRIMARY KEY (id_domicilio, cod_situacion, fecha_desde),
-	FOREIGN KEY (id_domicilio) REFERENCES domicilio(id_domicilio),
-	FOREIGN KEY (cod_situacion) REFERENCES situacion(cod_situacion)
-);
-
 
 CREATE TABLE cuenta(
 	id_cuenta INT PRIMARY KEY,
@@ -186,21 +152,21 @@ CREATE TABLE tipo_articulo (
 CREATE TABLE articulo (
     	id_articulo INT PRIMARY KEY,
     	id_tipo_articulo INT,
-	id_articulo_pack INT,
-    	id_precio INT,
-	fecha_inicio_precio DATE,
+		id_articulo_pack INT,
+   		id_precio INT,
+		fecha_inicio_precio DATE,
     	descripcion_art VARCHAR(100),
     	uso_simcard BOOLEAN,
-	id_sucursal INT,
-	FOREIGN KEY (id_sucursal) REFERENCES sucursal(id_sucursal),
     	FOREIGN KEY (id_tipo_articulo) REFERENCES tipo_articulo(id_tipo_articulo),
-	FOREIGN KEY (id_precio, fecha_inicio_precio) REFERENCES precio(id_precio, fecha_inicio_precio)
+		FOREIGN KEY (id_precio, fecha_inicio_precio) REFERENCES precio(id_precio, fecha_inicio_precio)
 );
 
-CREATE TABLE tipo_plan(
-	id_tipo_plan INT PRIMARY KEY,
-	nombre_plan VARCHAR(100),
-	desc_plan VARCHAR(100)
+CREATE TABLE articulo_sucursal(
+	id_articulo INT,
+	id_sucursal INT,
+	PRIMARY KEY (id_articulo, id_sucursal),
+	FOREIGN KEY (id_articulo) REFERENCES articulo(id_articulo),
+	FOREIGN KEY (id_sucursal) REFERENCES sucursal(id_sucursal)
 );
 
 CREATE TABLE articulo_pack(
@@ -216,18 +182,46 @@ CREATE TABLE tipo_domicilio(
 	nom_tipo_dom VARCHAR(100)
 );
 
-
-CREATE TABLE estado_domicilio(
-	id_estado_dom SERIAL,
-	estado_dom VARCHAR(100),
-	fecha_desde DATE,
-	fecha_hasta DATE,
-	PRIMARY KEY (id_estado_dom, fecha_desde)
+CREATE TABLE tipo_plan(
+	id_tipo_plan INT PRIMARY KEY,
+	nombre_plan VARCHAR(100),
+	desc_plan VARCHAR(100)
 );
 
 CREATE TABLE formato_fact(
 	id_formato_fact INT PRIMARY KEY,
 	nom_formato_fact VARCHAR(100)
+);
+
+CREATE TABLE situacion(
+	cod_situacion INT PRIMARY KEY,
+	nom_situacion VARCHAR(100),
+	desc_situacion VARCHAR(1000)
+);
+
+CREATE TABLE domicilio(
+	id_domicilio INT PRIMARY KEY,
+	direccion_dom VARCHAR(15),
+	fecha_alta_dom DATE,
+	fecha_baja_dom DATE,
+	id_baja INT,
+	id_tipo_dom INT,
+	id_formato_fact INT,
+	id_estructura INT,
+	FOREIGN KEY (id_tipo_dom) REFERENCES tipo_domicilio(id_tipo_dom),
+	FOREIGN KEY (id_formato_fact) REFERENCES formato_fact(id_formato_fact),
+	FOREIGN KEY (id_estructura) REFERENCES estructura_territorial(id_estructura),
+	FOREIGN KEY (id_baja) REFERENCES causa_baja(id_baja)
+);
+
+CREATE TABLE estado_domicilio(
+	id_domicilio INT,
+	cod_situacion INT,
+	fecha_desde DATE,
+	fecha_hasta DATE,
+	PRIMARY KEY (id_domicilio, cod_situacion, fecha_desde),
+	FOREIGN KEY (id_domicilio) REFERENCES domicilio(id_domicilio),
+	FOREIGN KEY (cod_situacion) REFERENCES situacion(cod_situacion)
 );
 
 CREATE TABLE estado_simcard(
@@ -257,4 +251,5 @@ CREATE TABLE stock_sucursal(
 	FOREIGN KEY (id_sucursal) REFERENCES sucursal(id_sucursal),
 	FOREIGN KEY (id_articulo) REFERENCES articulo(id_articulo)
 );
+
 
