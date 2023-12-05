@@ -152,3 +152,32 @@ CREATE TABLE vigencia_vendedor(
 	FOREIGN KEY (id_sucursal) REFERENCES sucursal(id_sucursal),
 	FOREIGN KEY (id_vendedor) REFERENCES vendedor(id_vendedor)
 );
+
+CREATE TABLE precio (
+    id_precio int,
+    monto INT,
+    id_estructura INT,
+    fecha_inicio_precio DATE,
+    fecha_fin_precio DATE,
+    PRIMARY KEY (id_precio, fecha_inicio_precio),
+    FOREIGN KEY (id_estructura) REFERENCES estructura_territorial(id_estructura)
+);
+
+CREATE TABLE tipo_articulo (
+    id_tipo_articulo SERIAL PRIMARY KEY,
+    nom_tipo_articulo varchar(40)
+);
+
+CREATE TABLE articulo (
+    id_articulo INT PRIMARY KEY,
+    id_tipo_articulo INT,
+	id_articulo_pack INT,
+    id_precio INT,
+	fecha_inicio_precio DATE,
+    descripcion_art VARCHAR(100),
+    uso_simcard BOOLEAN,
+	id_sucursal INT,
+	FOREIGN KEY (id_sucursal) REFERENCES sucursal(id_sucursal),
+    FOREIGN KEY (id_tipo_articulo) REFERENCES tipo_articulo(id_tipo_articulo),
+	FOREIGN KEY (id_precio, fecha_inicio_precio) REFERENCES precio(id_precio, fecha_inicio_precio)
+);
