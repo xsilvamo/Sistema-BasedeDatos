@@ -146,9 +146,10 @@ CREATE TABLE sucursal(
 );
 
 CREATE TABLE vigencia_vendedor(
-	id_sucursal INT PRIMARY KEY,
-	id_vendedor INT PRIMARY KEY,
+	id_sucursal INT,
+	id_vendedor INT,
 	fecha_vigencia DATE,
+	PRIMARY KEY (id_sucursal, id_vendedor),
 	FOREIGN KEY (id_sucursal) REFERENCES sucursal(id_sucursal),
 	FOREIGN KEY (id_vendedor) REFERENCES vendedor(id_vendedor)
 );
