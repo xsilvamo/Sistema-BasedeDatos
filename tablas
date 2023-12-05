@@ -178,7 +178,7 @@ CREATE TABLE articulo_pack(
 );
 
 CREATE TABLE tipo_domicilio(
-	id_tipo_dom INT PRIMARY KEY,
+	id_tipo_dom SERIAL PRIMARY KEY,
 	nom_tipo_dom VARCHAR(100)
 );
 
