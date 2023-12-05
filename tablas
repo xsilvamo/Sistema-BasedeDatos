@@ -1,1 +1,153 @@
-hola mundo
+--- TABLAS
+
+CREATE TABLE tipo_estructura(
+	id_tipo_estructura SERIAL PRIMARY KEY,
+	tipo_estruc VARCHAR(100)
+);
+
+CREATE TABLE divisa (
+    id_divisa SERIAL PRIMARY KEY,
+    nom_divisa VARCHAR(100),
+	valor INT
+);
+
+drop table tipo_estructura;
+drop table estructura_territorial;
+drop table divisa;
+
+CREATE TABLE estructura_territorial (
+    id_estructura INT PRIMARY KEY,
+    nom_estructura varchar(100),
+	impuesto INT,
+	id_tipo_estructura INT,
+	id_divisa INT,
+	id_estructura_sup INT,
+	FOREIGN KEY (id_tipo_estructura) REFERENCES tipo_estructura(id_tipo_estructura),
+	FOREIGN KEY (id_divisa) REFERENCES divisa(id_divisa),
+	FOREIGN KEY (id_estructura_sup) REFERENCES estructura_territorial(id_estructura)
+);
+
+CREATE TABLE causa_baja_cli(
+	id_baja_cli SERIAL PRIMARY KEY,
+	causa_baja_cliente VARCHAR(100)
+); 
+
+CREATE TABLE tipo_cedula(
+	id_tipo_cedula SERIAL PRIMARY KEY,
+	nom_tipo_cedula VARCHAR(100)
+);
+
+CREATE TABLE tipo_cliente(
+	id_tipo_cliente SERIAL PRIMARY KEY,
+	nom_tipo_cliente VARCHAR(100)
+);
+-- s
+CREATE TABLE estado_cliente(
+	id_estado_cli SERIAL PRIMARY KEY,
+	estado_cli VARCHAR(100)
+);
+
+-- Datos para tipo_estructura
+INSERT INTO tipo_estructura (tipo_estruc) VALUES
+('País'),
+('Región'),
+('Ciudad'),
+('Barrio');
+
+select * from tipo_estructura;
+
+-- Datos para divisa
+INSERT INTO divisa (nom_divisa, valor) VALUES
+('Dólar estadounidense', 1),
+('Euro', 0.85),
+('Libra esterlina', 0.73),
+('Yen japonés', 111.25),
+('Peso chileno', 869.57);
+
+-- Datos para estructura_territorial
+INSERT INTO estructura_territorial (id_estructura, nom_estructura, impuesto, id_tipo_estructura, id_divisa, id_estructura_sup) VALUES
+(1,'Estados Unidos', 8, 1, 1, NULL),
+(2,'Unión Europea', 15, 2, 2, NULL),
+(3,'Nueva York', 5, 3, 1, 1),
+(4,'París', 10, 3, 2, 2),
+(5,'Tokio', 7, 3, 4, 1),
+(6,'Chile', 19, 1, 5, NULL),
+(7,'Santiago', 19, 3, 5, 6);
+
+CREATE TABLE causa_baja_cli(
+	id_baja_cli SERIAL PRIMARY KEY,
+	causa_baja_cliente VARCHAR(100)
+); 
+
+CREATE TABLE tipo_cedula(
+	id_tipo_cedula SERIAL PRIMARY KEY,
+	nom_tipo_cedula VARCHAR(100)
+);
+
+CREATE TABLE tipo_cliente(
+	id_tipo_cliente SERIAL PRIMARY KEY,
+	nom_tipo_cliente VARCHAR(100)
+);
+
+CREATE TABLE estado_cliente(
+	id_estado_cli SERIAL PRIMARY KEY,
+	estado_cli VARCHAR(100)
+);
+
+CREATE TABLE cliente(
+	dni INT,
+	id_cliente INT PRIMARY KEY,
+	nombres VARCHAR(100),
+	apellido_pat VARCHAR(100),
+	apellido_mat VARCHAR(100),
+	telefono VARCHAR(100),
+	fecha_alta_cli DATE,
+	fecha_baja_cli DATE,
+	id_baja_cli INT,
+	id_tipo_cedula INT,
+	id_tipo_cliente INT,
+	id_estado_cli INT,
+	FOREIGN KEY (id_baja_cli) REFERENCES causa_baja_cli(id_baja_cli),
+	FOREIGN KEY (id_tipo_cedula) REFERENCES tipo_cedula(id_tipo_cedula),
+	FOREIGN KEY (id_tipo_cliente) REFERENCES tipo_cliente(id_tipo_cliente),
+	FOREIGN KEY (id_estado_cli) REFERENCES estado_cliente(id_estado_cli)
+);
+
+CREATE TABLE causa_baja(
+	id_baja SERIAL PRIMARY KEY,
+	causa_baja VARCHAR(100)
+); 
+
+CREATE TABLE tipo_cedula(
+	id_tipo_cedula SERIAL PRIMARY KEY,
+	nom_tipo_cedula VARCHAR(100)
+);
+
+CREATE TABLE tipo_cliente(
+	id_tipo_cliente SERIAL PRIMARY KEY,
+	nom_tipo_cliente VARCHAR(100)
+);
+
+CREATE TABLE estado_cliente(
+	id_estado_cli SERIAL PRIMARY KEY,
+	estado_cli VARCHAR(100)
+);
+
+CREATE TABLE cliente(
+	dni INT,
+	id_cliente INT PRIMARY KEY,
+	nombres VARCHAR(100),
+	apellido_pat VARCHAR(100),
+	apellido_mat VARCHAR(100),
+	telefono VARCHAR(100),
+	fecha_alta_cli DATE,
+	fecha_baja_cli DATE,
+	id_baja INT,
+	id_tipo_cedula INT,
+	id_tipo_cliente INT,
+	id_estado_cli INT,
+	FOREIGN KEY (id_baja) REFERENCES causa_baja(id_baja),
+	FOREIGN KEY (id_tipo_cedula) REFERENCES tipo_cedula(id_tipo_cedula),
+	FOREIGN KEY (id_tipo_cliente) REFERENCES tipo_cliente(id_tipo_cliente),
+	FOREIGN KEY (id_estado_cli) REFERENCES estado_cliente(id_estado_cli)
+);
