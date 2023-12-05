@@ -1,0 +1,26 @@
+-- Datos para tipo_estructura
+INSERT INTO tipo_estructura (tipo_estruc) VALUES
+('País'),
+('Región'),
+('Ciudad'),
+('Barrio');
+
+select * from tipo_estructura;
+
+-- Datos para divisa
+INSERT INTO divisa (nom_divisa, valor) VALUES
+('Dólar estadounidense', 1),
+('Euro', 0.85),
+('Libra esterlina', 0.73),
+('Yen japonés', 111.25),
+('Peso chileno', 869.57);
+
+-- Datos para estructura_territorial
+INSERT INTO estructura_territorial (id_estructura, nom_estructura, impuesto, id_tipo_estructura, id_divisa, id_estructura_sup) VALUES
+(1,'Estados Unidos', 8, 1, 1, NULL),
+(2,'Unión Europea', 15, 2, 2, NULL),
+(3,'Nueva York', 5, 3, 1, 1),
+(4,'París', 10, 3, 2, 2),
+(5,'Tokio', 7, 3, 4, 1),
+(6,'Chile', 19, 1, 5, NULL),
+(7,'Santiago', 19, 3, 5, 6);
