@@ -168,3 +168,12 @@ CREATE TABLE tipo_plan(
 	nombre_plan VARCHAR(100),
 	desc_plan VARCHAR(100)
 );
+
+CREATE TABLE articulo_pack(
+	id_articulo INT,
+	id_articulo_pack INT,
+	PRIMARY KEY (id_articulo, id_articulo_pack),
+	FOREIGN KEY (id_articulo) REFERENCES articulo(id_articulo),
+	FOREIGN KEY (id_articulo_pack) REFERENCES articulo(id_articulo_pack)
+);
+
