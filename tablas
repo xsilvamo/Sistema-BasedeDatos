@@ -216,3 +216,11 @@ CREATE TABLE articulo_por_domicilio(
 	FOREIGN KEY (id_domicilio) REFERENCES domicilio(id_domicilio)
 );
 
+CREATE TABLE stock_sucursal(
+	id_sucursal INT,
+	id_articulo INT,
+	PRIMARY KEY (id_sucursal, id_articulo),
+	FOREIGN KEY (id_sucursal) REFERENCES sucursal(id_sucursal),
+	FOREIGN KEY (id_articulo) REFERENCES articulo(id_articulo)
+);
+
