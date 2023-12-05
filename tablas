@@ -54,7 +54,6 @@ INSERT INTO tipo_estructura (tipo_estruc) VALUES
 ('Ciudad'),
 ('Barrio');
 
-select * from tipo_estructura;
 
 -- Datos para divisa
 INSERT INTO divisa (nom_divisa, valor) VALUES
