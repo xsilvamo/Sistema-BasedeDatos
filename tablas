@@ -182,3 +182,20 @@ CREATE TABLE tipo_domicilio(
 	nom_tipo_dom VARCHAR(100)
 );
 
+CREATE TABLE articulo_pack(
+	id_articulo INT,
+	id_articulo_pack INT,
+	PRIMARY KEY (id_articulo, id_articulo_pack),
+	FOREIGN KEY (id_articulo) REFERENCES articulo(id_articulo),
+	FOREIGN KEY (id_articulo_pack) REFERENCES articulo(id_articulo_pack)
+);
+
+CREATE TABLE estado_domicilio(
+	id_estado_dom SERIAL,
+	estado_dom VARCHAR(100),
+	fecha_desde DATE,
+	fecha_hasta DATE,
+	PRIMARY KEY (id_estado_dom, fecha_desde)
+);
+
+
