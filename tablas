@@ -191,4 +191,8 @@ CREATE TABLE estado_domicilio(
 	PRIMARY KEY (id_estado_dom, fecha_desde)
 );
 
+CREATE TABLE formato_fact(
+	id_formato_fact INT PRIMARY KEY,
+	nom_formato_fact VARCHAR(100)
+);
 
