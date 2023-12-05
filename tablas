@@ -134,3 +134,14 @@ CREATE TABLE accion(
 	FOREIGN KEY (id_estado_accion) REFERENCES estado_accion(id_estado_accion),
 	FOREIGN KEY (id_vendedor) REFERENCES vendedor(id_vendedor)
 );
+
+CREATE TABLE sucursal(
+	id_sucursal INT PRIMARY KEY,
+	direc_sucursal VARCHAR(100),
+	nom_sucursal VARCHAR(100),
+	telefono_sucursal INT,
+	correo_sucursal VARCHAR(100),
+	id_estructura INT,
+	FOREIGN KEY (id_estructura) REFERENCES estructura_territorial(id_estructura)
+);
+
