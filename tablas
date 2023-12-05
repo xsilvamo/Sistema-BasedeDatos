@@ -103,14 +103,6 @@ CREATE TABLE accion(
 	FOREIGN KEY (id_vendedor) REFERENCES vendedor(id_vendedor)
 );
 
-CREATE TABLE vendedor(
-	dni_vendedor VARCHAR(100),
-	id_vendedor INT,
-	nom_vendedor VARCHAR(100),
-	apellido_pat_ven VARCHAR(100),
-	apellido_mat_ven VARCHAR(100),
-	comisiones INT
-);
 
 CREATE TABLE vendedor(
 	dni_vendedor VARCHAR(100),
