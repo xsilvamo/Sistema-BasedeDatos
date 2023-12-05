@@ -81,6 +81,17 @@ CREATE TABLE cuenta(
 	FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
 );
 
+CREATE TABLE tipo_accion(
+	id_tipo_accion SERIAL PRIMARY KEY,
+	nom_tipo_accion VARCHAR(100)
+);
+
+
+CREATE TABLE estado_accion(
+	id_estado_accion SERIAL PRIMARY KEY,
+	nom_estado_accion VARCHAR(100)
+);
+
 CREATE TABLE accion(
 	id_accion INT PRIMARY KEY,
 	fecha_inscripcion_a DATE,
@@ -91,3 +102,4 @@ CREATE TABLE accion(
 	FOREIGN KEY (id_estado_accion) REFERENCES estado_accion(id_estado_accion),
 	FOREIGN KEY (id_vendedor) REFERENCES vendedor(id_vendedor)
 );
+
