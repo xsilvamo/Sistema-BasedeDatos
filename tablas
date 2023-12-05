@@ -162,3 +162,9 @@ CREATE TABLE articulo (
     	FOREIGN KEY (id_tipo_articulo) REFERENCES tipo_articulo(id_tipo_articulo),
 	FOREIGN KEY (id_precio, fecha_inicio_precio) REFERENCES precio(id_precio, fecha_inicio_precio)
 );
+
+CREATE TABLE tipo_plan(
+	id_tipo_plan INT PRIMARY KEY,
+	nombre_plan VARCHAR(100),
+	desc_plan VARCHAR(100)
+);
