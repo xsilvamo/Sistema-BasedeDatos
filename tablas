@@ -196,3 +196,23 @@ CREATE TABLE formato_fact(
 	nom_formato_fact VARCHAR(100)
 );
 
+CREATE TABLE estado_simcard(
+	id_estado_sim INT PRIMARY KEY,
+	estado_sim VARCHAR(50)
+);
+
+CREATE TABLE simcard(
+	num_imsi INT PRIMARY KEY,
+	cel_asociado VARCHAR(50),
+	id_estado_sim INT,
+	FOREIGN KEY (id_estado_sim) REFERENCES estado_simcard(id_estado_sim)
+);
+
+CREATE TABLE articulo_por_domicilio(
+	id_articulo INT,
+	id_domicilio INT,
+	PRIMARY KEY (id_articulo, id_domicilio),
+	FOREIGN KEY (id_articulo) REFERENCES articulo(id_articulo),
+	FOREIGN KEY (id_domicilio) REFERENCES domicilio(id_domicilio)
+);
+
