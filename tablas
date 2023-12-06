@@ -263,4 +263,13 @@ CREATE TABLE planes_atencion(
 	FOREIGN KEY (id_estructura) REFERENCES estructura_territorial(id_estructura)
 );
 
+CREATE TABLE contrato(
+	id_contrato INT PRIMARY KEY,
+	tiempo_contrato VARCHAR(100),
+	fecha_inicio_contr DATE,
+	fecha_fin_contr DATE,
+	id_plan INT,
+	FOREIGN KEY (id_plan) REFERENCES planes_atencion(id_plan)
+);
+
 
