@@ -102,3 +102,34 @@ INSERT INTO precio (id_precio, monto, id_estructura, fecha_inicio_precio, fecha_
   (3, 100, 5, '2023-03-01', NULL),
   (4, 200, 4, '2023-01-01', '2023-12-31'),
   (5, 1000, 6, '2023-02-01', NULL);
+
+  -- Insertar datos en la tabla tipo_articulo
+INSERT INTO tipo_articulo (nom_tipo_articulo) VALUES
+  ('Cámara de Seguridad'),
+  ('Sensor de Movimiento'),
+  ('Detector Sísmico'),
+  ('Alarma');
+
+-- Insertar datos en la tabla articulo
+INSERT INTO articulo (id_articulo, id_tipo_articulo, id_precio, fecha_inicio_precio, descripcion_art, uso_simcard, id_articulo_pack) VALUES
+  (1, 1, 1, '2023-01-01', 'Cámara de Seguridad Exterior', false, NULL),
+  (2, 2, 2, '2023-02-01', 'Sensor de Movimiento Principal', false, NULL),
+  (3, 3, 3, '2023-03-01', 'Detector Sísmico para Edificios', false, NULL),
+  (4, 1, 1, '2023-01-01', 'Cámara de Seguridad Interior', false, 1),
+  (5, 2, 2, '2023-02-01', 'Sensor de Movimiento para Patio', false, 2);
+
+-- Insertar datos en la tabla articulo_sucursal
+INSERT INTO articulo_sucursal (id_articulo, id_sucursal) VALUES
+  (1, 1),
+  (2, 2),
+  (3, 3),
+  (4, 1),
+  (5, 2);
+
+-- Insertar datos en la tabla articulo_pack
+INSERT INTO articulo_pack (id_articulo, id_articulo_pack, nombre_pack) VALUES
+  (4, 1, 'Pack de Seguridad Residencial'),
+  (5, 2, 'Pack de Seguridad para Exteriores');
+
+
+
