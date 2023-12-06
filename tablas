@@ -130,38 +130,45 @@ CREATE TABLE precio (
     	FOREIGN KEY (id_estructura) REFERENCES estructura_territorial(id_estructura)
 );
 
+-- Tabla tipo_articulo
 CREATE TABLE tipo_articulo (
-    	id_tipo_articulo SERIAL PRIMARY KEY,
-    	nom_tipo_articulo varchar(40)
+    id_tipo_articulo SERIAL PRIMARY KEY,
+    nom_tipo_articulo varchar(40)
 );
 
+-- Tabla articulo
 CREATE TABLE articulo (
-    	id_articulo INT PRIMARY KEY,
-    	id_tipo_articulo INT,
-		id_articulo_pack INT,
-   		id_precio INT,
-		fecha_inicio_precio DATE,
-    	descripcion_art VARCHAR(100),
-    	uso_simcard BOOLEAN,
-    	FOREIGN KEY (id_tipo_articulo) REFERENCES tipo_articulo(id_tipo_articulo),
-		FOREIGN KEY (id_precio, fecha_inicio_precio) REFERENCES precio(id_precio, fecha_inicio_precio)
+    id_articulo INT PRIMARY KEY,
+    id_tipo_articulo INT,
+    id_precio INT,
+    fecha_inicio_precio DATE,
+    descripcion_art VARCHAR(100),
+    uso_simcard BOOLEAN,
+    id_articulo_pack INT, -- Referencia al paquete al que pertenece (puede ser NULL)
+    FOREIGN KEY (id_tipo_articulo) REFERENCES tipo_articulo(id_tipo_articulo),
+    FOREIGN KEY (id_precio, fecha_inicio_precio) REFERENCES precio(id_precio, fecha_inicio_precio),
+    FOREIGN KEY (id_articulo_pack) REFERENCES articulo(id_articulo)
 );
 
-CREATE TABLE articulo_sucursal(
-	id_articulo INT,
-	id_sucursal INT,
-	PRIMARY KEY (id_articulo, id_sucursal),
-	FOREIGN KEY (id_articulo) REFERENCES articulo(id_articulo),
-	FOREIGN KEY (id_sucursal) REFERENCES sucursal(id_sucursal)
+-- Tabla articulo_sucursal
+CREATE TABLE articulo_sucursal (
+    id_articulo INT,
+    id_sucursal INT,
+    PRIMARY KEY (id_articulo, id_sucursal),
+    FOREIGN KEY (id_articulo) REFERENCES articulo(id_articulo),
+    FOREIGN KEY (id_sucursal) REFERENCES sucursal(id_sucursal)
 );
 
-CREATE TABLE articulo_pack(
-		id_articulo INT,
-		id_articulo_pack INT,
-		PRIMARY KEY (id_articulo, id_articulo_pack),
-		FOREIGN KEY (id_articulo) REFERENCES articulo(id_articulo),
-		FOREIGN KEY (id_articulo_pack) REFERENCES articulo(id_articulo)
+-- Tabla articulo_pack
+CREATE TABLE articulo_pack (
+    id_articulo INT,
+    id_articulo_pack INT,
+    nombre_pack VARCHAR(100), -- Nuevo atributo para el nombre del paquete
+    PRIMARY KEY (id_articulo, id_articulo_pack),
+    FOREIGN KEY (id_articulo) REFERENCES articulo(id_articulo),
+    FOREIGN KEY (id_articulo_pack) REFERENCES articulo(id_articulo)
 );
+
 
 CREATE TABLE tipo_domicilio(
 	id_tipo_dom SERIAL PRIMARY KEY,
