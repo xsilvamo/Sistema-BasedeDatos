@@ -87,3 +87,18 @@ INSERT INTO sucursal (id_sucursal, direc_sucursal, nom_sucursal, telefono_sucurs
   (1, 'Calle 123', 'Sucursal Central', 555-1234, 'central@example.com', 1),
   (2, 'Avenida 456', 'Sucursal Valpo', 555-5678, 'valpo@example.com', 2),
   (3, 'Ruta 789', 'Sucursal Concepción', 555-9876, 'concepcion@example.com', 3);
+
+INSERT INTO vigencia_vendedor (id_sucursal, id_vendedor, fecha_vigencia) VALUES
+  (1, 1, '2023-01-01'),
+  (1, 2, '2023-01-01'),
+  (2, 2, '2023-02-01'),
+  (3, 3, '2023-03-01'),
+  (3, 1, '2023-03-01');
+
+-- Insertar datos en la tabla precio
+INSERT INTO precio (id_precio, monto, id_estructura, fecha_inicio_precio, fecha_fin_precio) VALUES
+  (1, 50, 1, '2023-01-01', '2023-12-31'),
+  (2, 75, 1, '2023-02-01', '2023-12-31'),
+  (3, 100, 5, '2023-03-01', NULL),
+  (4, 200, 4, '2023-01-01', '2023-12-31'),
+  (5, 1000, 6, '2023-02-01', NULL);
