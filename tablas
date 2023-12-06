@@ -248,9 +248,11 @@ CREATE TABLE simcard(
 CREATE TABLE articulo_por_domicilio(
 	id_articulo INT,
 	id_domicilio INT,
+	num_imsi INT,
 	PRIMARY KEY (id_articulo, id_domicilio),
 	FOREIGN KEY (id_articulo) REFERENCES articulo(id_articulo),
-	FOREIGN KEY (id_domicilio) REFERENCES domicilio(id_domicilio)
+	FOREIGN KEY (id_domicilio) REFERENCES domicilio(id_domicilio),
+	FOREIGN KEY (num_imsi) REFERENCES simcard(num_imsi);
 );
 
 CREATE TABLE stock_sucursal(
