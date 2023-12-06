@@ -167,4 +167,36 @@ INSERT INTO domicilio (id_domicilio, direccion_dom, fecha_alta_dom, fecha_baja_d
   (3, '789 Oficina Central', '2023-03-01', NULL, NULL, 3, 1, 5),
   (4, '101 Calle Residencial', '2023-04-01', NULL, NULL, 1, 2, 5);
 
+-- Insertar datos en la tabla estado_cuenta
+INSERT INTO estado_cuenta (estado_cuenta) VALUES
+  ('Activa'),
+  ('Inactiva'),
+  ('Pendiente de Pago');
+
+-- Insertar datos en la tabla cuenta
+INSERT INTO cuenta (id_cuenta, direccion_cuenta, correo_elect, fecha_alta_cuenta, fecha_baja_cuenta, id_baja, id_estado_cuenta, id_cliente, id_domicilio) VALUES
+  (1, '456 Calle Secundaria', 'cliente1@example.com', '2023-01-01', NULL, NULL, 1, 1, 1),
+  (2, '789 Avenida Principal', 'cliente2@example.com', '2023-02-01', NULL, NULL, 2, 2, 2),
+  (3, '101 Oficina Central', 'cliente3@example.com', '2023-03-01', NULL, NULL, 1, 3, 3);
+
+-- Insertar datos en la tabla estado_domicilio
+INSERT INTO estado_domicilio (id_domicilio, cod_situacion, fecha_desde, fecha_hasta) VALUES
+  (1, 1, '2023-01-01', NULL),
+  (2, 1, '2023-02-01', NULL),
+  (3, 1, '2023-03-01', NULL),
+  (1, 2, '2023-02-15', '2023-02-28'),
+  (2, 2, '2023-03-15', NULL);
+
+-- Insertar datos en la tabla estado_simcard
+INSERT INTO estado_simcard (id_estado_sim, estado_sim) VALUES
+  (1, 'Activa'),
+  (2, 'Inactiva'),
+  (3, 'Bloqueada');
+
+-- Insertar datos en la tabla simcard
+INSERT INTO simcard (num_imsi, cel_asociado, id_estado_sim) VALUES
+  (123456789, '555-1111', 1),
+  (987654321, '555-2222', 2),
+  (111223344, '555-3333', 3);
+
 
