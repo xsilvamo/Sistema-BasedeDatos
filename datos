@@ -15,3 +15,35 @@ INSERT INTO estructura_territorial (id_estructura, nom_estructura, impuesto, id_
 (2,'Región Metropolitana', 19, 2, 1, 1),
 (3,'Santiago', 19, 3, 1, 2),
 (4,'Recoleta', 19, 4, 1, 3);
+
+-- Insertar causas de baja
+INSERT INTO causa_baja (causa_baja) VALUES
+  ('Voluntaria'),
+  ('Cambio de proveedor'),
+  ('Inactividad');
+
+-- Insertar tipos de cédula
+INSERT INTO tipo_cedula (nom_tipo_cedula) VALUES
+  ('Cédula de Identidad'),
+  ('Pasaporte'),
+  ('Documento Extranjero');
+
+-- Insertar tipos de cliente
+INSERT INTO tipo_cliente (nom_tipo_cliente) VALUES
+  ('Individual'),
+  ('Corporativo'),
+  ('Gobierno');
+
+-- Insertar estados de cliente
+INSERT INTO estado_cliente (estado_cli) VALUES
+  ('Activo'),
+  ('Inactivo'),
+  ('Suspendido');
+
+-- Insertar datos de clientes
+INSERT INTO cliente (dni, id_cliente, nombres, apellido_pat, apellido_mat, telefono, fecha_alta_cli, fecha_baja_cli, id_baja, id_tipo_cedula, id_tipo_cliente, id_estado_cli) VALUES
+  (123456789, 1, 'Juan', 'Pérez', 'Gómez', '555-1234', '2023-01-01', NULL, NULL, 1, 1, 1),
+  (987654321, 2, 'María', 'López', 'Martínez', '555-5678', '2022-05-10', '2023-03-15', 2, 2, 2, 2),
+  (456789012, 3, 'Carlos', 'Ruiz', 'Sánchez', '555-9876', '2023-02-20', NULL, NULL, 3, 3, 3);
+
+-- Puedes seguir insertando más datos según sea necesario
