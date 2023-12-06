@@ -200,7 +200,11 @@ INSERT INTO simcard (num_imsi, cel_asociado, id_estado_sim) VALUES
   (111223344, '555-3333', 3);
 
 
-
+-- Insertar datos en la tabla articulo_por_domicilio
+INSERT INTO articulo_por_domicilio (id_articulo, id_domicilio, num_imsi) VALUES
+  (6, 1, 123456789),
+  (7, 2, 987654321),
+  (8, 3, 111223344);
 
 
 -- Insertar datos en la tabla stock_sucursal
@@ -222,4 +226,10 @@ INSERT INTO contrato (id_contrato, tiempo_contrato, fecha_inicio_contr, fecha_fi
   (1, 'Anual', '2023-01-01', '2024-01-01', 1),
   (2, 'Mensual', '2023-02-01', '2023-03-01', 2),
   (3, 'Trimestral', '2023-03-01', '2023-06-01', 3);
+
+-- Insertar más datos en la tabla articulo con uso_simcard TRUE
+INSERT INTO articulo (id_articulo, id_tipo_articulo, id_precio, fecha_inicio_precio, descripcion_art, uso_simcard, id_articulo_pack) VALUES
+  (6, 4, 4, '2023-01-01' , 'Sistema de Alarma Residencial con SIM', true, NULL),
+  (7, 1, 1, '2023-01-01' ,'Cámara de Seguridad con Simcard', true, NULL),
+  (8, 3, 3, '2023-03-01' ,'Sensor de Movimiento con Conexión Móvil', true, 2);
 
