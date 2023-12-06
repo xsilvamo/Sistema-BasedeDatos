@@ -54,20 +54,17 @@ INSERT INTO cliente (dni, id_cliente, nombres, apellido_pat, apellido_mat, telef
   (987654321, 2, 'María', 'López', 'Martínez', '555-5678', '2022-05-10', '2023-03-15', 2, 2, 2, 2),
   (456789012, 3, 'Carlos', 'Ruiz', 'Sánchez', '555-9876', '2023-02-20', NULL, NULL, 3, 3, 3);
 
-
-
-
 -- Insertar tipos de acción
 INSERT INTO tipo_accion (id_tipo_accion, nom_tipo_accion) VALUES
-  (1,'Promoción'),
-  (2,'Venta'),
-  (3,'Reclamación');
+  (1,'Alta'),
+  (2,'Baja'),
+  (3,'General');
 
 -- Insertar estados de acción
 INSERT INTO estado_accion (id_estado_accion, nom_estado_accion) VALUES
-  (1,'Pendiente'),
-  (2,'En Proceso'),
-  (3,'Completado'),
+  (1,'Error'),
+  (2,'En proceso'),
+  (3,'Exitoso'),
   (4,'Cancelado');
 
 -- Insertar vendedores
