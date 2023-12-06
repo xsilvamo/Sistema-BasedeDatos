@@ -46,4 +46,44 @@ INSERT INTO cliente (dni, id_cliente, nombres, apellido_pat, apellido_mat, telef
   (987654321, 2, 'María', 'López', 'Martínez', '555-5678', '2022-05-10', '2023-03-15', 2, 2, 2, 2),
   (456789012, 3, 'Carlos', 'Ruiz', 'Sánchez', '555-9876', '2023-02-20', NULL, NULL, 3, 3, 3);
 
--- Puedes seguir insertando más datos según sea necesario
+INSERT INTO estructura_territorial (id_estructura, nom_estructura, impuesto, id_tipo_estructura, id_divisa, id_estructura_sup) VALUES
+(5,'La Cisterna', 19, 4, 1, 3),
+(6,'San Miguel', 19, 4, 1, 3)
+;
+
+-- Insertar estados de cuenta
+INSERT INTO estado_cuenta (estado_cuenta) VALUES
+  ('Activo'),
+  ('Inactivo'),
+  ('Pendiente de Pago');
+
+-- Insertar tipos de acción
+INSERT INTO tipo_accion (nom_tipo_accion) VALUES
+  ('Promoción'),
+  ('Venta'),
+  ('Reclamación');
+
+-- Insertar estados de acción
+INSERT INTO estado_accion (nom_estado_accion) VALUES
+  ('Pendiente'),
+  ('En Proceso'),
+  ('Completado'),
+  ('Cancelado');
+
+-- Insertar vendedores
+INSERT INTO vendedor (dni_vendedor, id_vendedor, nom_vendedor, apellido_pat_ven, apellido_mat_ven, comisiones) VALUES
+  ('123456789', 1, 'Pedro', 'García', 'López', 5),
+  ('987654321', 2, 'Ana', 'Martínez', 'Pérez', 7),
+  ('456789012', 3, 'Juan', 'Ramírez', 'Sánchez', 6);
+
+-- Insertar acciones
+INSERT INTO accion (id_accion, fecha_inscripcion_a, fecha_ejecucion_ini, fecha_ejecucion_fin, comentarios, id_tipo_accion, id_estado_accion, id_vendedor) VALUES
+  (1, '2023-01-15', '2023-02-01', '2023-02-28', 'Promoción de Verano', 1, 3, 1),
+  (2, '2023-03-01', '2023-03-10', '2023-03-15', 'Venta de Producto A', 2, 2, 2),
+  (3, '2023-04-05', '2023-04-20', '2023-04-25', 'Reclamación de Cliente B', 3, 1, 3);
+
+-- Insertar sucursales
+INSERT INTO sucursal (id_sucursal, direc_sucursal, nom_sucursal, telefono_sucursal, correo_sucursal, id_estructura) VALUES
+  (1, 'Calle 123', 'Sucursal Central', 555-1234, 'central@example.com', 1),
+  (2, 'Avenida 456', 'Sucursal Valpo', 555-5678, 'valpo@example.com', 2),
+  (3, 'Ruta 789', 'Sucursal Concepción', 555-9876, 'concepcion@example.com', 3);
