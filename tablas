@@ -252,4 +252,15 @@ CREATE TABLE stock_sucursal(
 	FOREIGN KEY (id_articulo) REFERENCES articulo(id_articulo)
 );
 
+CREATE TABLE planes_atencion(
+	id_plan INT PRIMARY KEY,
+	id_tipo_plan INT,
+	id_precio INT,
+	id_estructura INT,
+	descripcion_plan VARCHAR(100),
+	FOREIGN KEY (id_tipo_plan) REFERENCES tipo_plan(id_tipo_plan),
+	FOREIGN KEY (id_precio) REFERENCES precio(id_precio),
+	FOREIGN KEY (id_estructura) REFERENCES estructura_territorial(id_estructura)
+);
+
 
