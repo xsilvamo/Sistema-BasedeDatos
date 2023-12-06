@@ -199,13 +199,9 @@ INSERT INTO simcard (num_imsi, cel_asociado, id_estado_sim) VALUES
   (987654321, '555-2222', 2),
   (111223344, '555-3333', 3);
 
--- Insertar datos en la tabla articulo_por_domicilio
-INSERT INTO articulo_por_domicilio (id_articulo, id_domicilio) VALUES
-  (1, 1),
-  (2, 2),
-  (3, 3),
-  (4, 1),
-  (5, 2);
+
+
+
 
 -- Insertar datos en la tabla stock_sucursal
 INSERT INTO stock_sucursal (id_sucursal, id_articulo) VALUES
