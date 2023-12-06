@@ -194,7 +194,7 @@ CREATE TABLE situacion(
 
 CREATE TABLE domicilio(
 	id_domicilio INT PRIMARY KEY,
-	direccion_dom VARCHAR(15),
+	direccion_dom VARCHAR(100),
 	fecha_alta_dom DATE,
 	fecha_baja_dom DATE,
 	id_baja INT,
