@@ -131,5 +131,40 @@ INSERT INTO articulo_pack (id_articulo, id_articulo_pack, nombre_pack) VALUES
   (4, 1, 'Pack de Seguridad Residencial'),
   (5, 2, 'Pack de Seguridad para Exteriores');
 
+-- Insertar datos en la tabla tipo_domicilio
+INSERT INTO tipo_domicilio (id_tipo_dom,nom_tipo_dom) VALUES
+  (1, 'Casa'),
+  (2, 'Apartamento'),
+  (3, 'Oficina');
+
+-- Insertar datos en la tabla tipo_plan
+INSERT INTO tipo_plan (id_tipo_plan, nombre_plan, desc_plan) VALUES
+  (1, 'Plan Residencial', 'Plan para uso residencial'),
+  (2, 'Plan Empresarial', 'Plan para uso empresarial'),
+  (3, 'Plan Premium', 'Plan con servicios premium');
+
+-- Insertar datos en la tabla formato_fact
+INSERT INTO formato_fact (id_formato_fact, nom_formato_fact) VALUES
+  (1, 'PDF'),
+  (2, 'Correo Electrónico');
+
+-- Insertar datos en la tabla situacion
+INSERT INTO situacion (cod_situacion, nom_situacion, desc_situacion) VALUES
+  (1, 'Activo', 'Domicilio actualmente en uso'),
+  (2, 'Inactivo', 'Domicilio dado de baja temporalmente'),
+  (3, 'Cancelado', 'Domicilio cancelado definitivamente');
+
+
+-- Cambia la extensión de un campo VARCHAR en una tabla
+ALTER TABLE domicilio
+ALTER COLUMN direccion_dom TYPE VARCHAR(100);
+
+
+-- Insertar datos en la tabla domicilio
+INSERT INTO domicilio (id_domicilio, direccion_dom, fecha_alta_dom, fecha_baja_dom, id_baja, id_tipo_dom, id_formato_fact, id_estructura) VALUES
+  (1, '123 Calle Principal', '2023-01-01', NULL, NULL, 1, 1, 4),
+  (2, '456 Avenida Secundaria', '2023-02-01', NULL, NULL, 2, 2,6),
+  (3, '789 Oficina Central', '2023-03-01', NULL, NULL, 3, 1, 5),
+  (4, '101 Calle Residencial', '2023-04-01', NULL, NULL, 1, 2, 5);
 
 
