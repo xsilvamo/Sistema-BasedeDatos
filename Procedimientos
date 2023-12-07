@@ -218,3 +218,61 @@ BEGIN
 END;
 $$;
 
+CREATE OR REPLACE PROCEDURE dar_alta_articulo_en_domicilio(
+    _id_articulo INT,
+    _id_domicilio INT
+)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    _id_plan INT;
+BEGIN
+    -- Obtener el id_plan asociado al domicilio
+    SELECT id_plan INTO _id_plan
+    FROM cuenta
+    JOIN planes_atencion ON cuenta.id_plan = planes_atencion.id_plan
+    WHERE cuenta.id_domicilio = _id_domicilio;
+
+    -- Verificar si el artículo está configurado como opcional en el plan
+    IF EXISTS (
+        SELECT 1
+        FROM precio
+        WHERE id_precio = _id_plan AND id_articulo = _id_articulo
+    ) THEN
+        -- Verificar si el artículo ya está registrado para el domicilio
+        IF NOT EXISTS (
+            SELECT 1
+            FROM articulo_por_domicilio
+            WHERE id_articulo = _id_articulo AND id_domicilio = _id_domicilio
+        ) THEN
+            -- Insertar en la tabla articulo_por_domicilio
+            INSERT INTO articulo_por_domicilio (id_articulo, id_domicilio)
+            VALUES (_id_articulo, _id_domicilio);
+
+            -- Actualizar datos en la tabla accion para indicar éxito
+            UPDATE accion
+            SET id_estado_accion = 3,
+                comentarios = 'Artículo dado de alta y activado correctamente en el domicilio',
+                fecha_ejecucion_ini = current_date,
+                fecha_ejecucion_fin = current_date
+            WHERE id_accion = 3; -- Utilizamos _id_articulo como referencia
+        ELSE
+            -- Actualizar datos en la tabla accion si el artículo ya está registrado para el domicilio
+            UPDATE accion
+            SET id_estado_accion = 1,
+                comentarios = 'El artículo ya está registrado para el domicilio',
+                fecha_ejecucion_ini = current_date,
+                fecha_ejecucion_fin = current_date
+            WHERE id_accion = 3; -- Utilizamos _id_articulo como referencia
+        END IF;
+    ELSE
+        -- Actualizar datos en la tabla accion si el artículo no está configurado como opcional en el plan
+        UPDATE accion
+        SET id_estado_accion = 1,
+            comentarios = 'El artículo no está configurado como opcional en el plan del domicilio',
+            fecha_ejecucion_ini = current_date,
+            fecha_ejecucion_fin = current_date
+        WHERE id_accion = 3; -- Utilizamos _id_articulo como referencia
+    END IF;
+END;
+$$;
