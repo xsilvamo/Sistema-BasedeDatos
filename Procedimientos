@@ -1,5 +1,3 @@
--- Procedimiento 1, 2, 5, 6
-
 CREATE OR REPLACE PROCEDURE insertar_domicilio(
     _id_domicilio INT,
     _direccion_dom VARCHAR,
@@ -44,41 +42,65 @@ BEGIN
 					fecha_ejecucion_fin = current_date
                 WHERE id_accion = 1; -- Utilizamos _id_domicilio como referencia
             ELSE
-                -- Insertar en la tabla si todas las condiciones son satisfactorias
-                INSERT INTO domicilio (
-                    id_domicilio,
-                    direccion_dom,
-                    fecha_alta_dom,
-                    fecha_baja_dom,
-                    id_baja,
-                    id_tipo_dom,
-                    id_formato_fact,
-                    id_estructura,
-					id_cuenta
-                ) VALUES (
-                    _id_domicilio,
-                    _direccion_dom,
-                    _fecha_alta_dom,
-                    _fecha_baja_dom,
-                    _id_baja,
-                    _id_tipo_dom,
-                    _id_formato_fact,
-                    _id_estructura,
-					_id_cuenta
-                );
-                
-                -- Actualizar datos en la tabla accion para indicar éxito
-                UPDATE accion
-                SET id_estado_accion = 3,
-                    comentarios = 'Domicilio creado correctamente',
-					fecha_ejecucion_ini = current_date,
-					fecha_ejecucion_fin = current_date
-                WHERE id_accion = 1;
+                -- Verificar si id_formato_fact es nulo
+                IF _id_formato_fact IS NULL THEN
+                    -- Actualizar datos en la tabla accion si no se proporciona id_formato_fact
+                    UPDATE accion
+                    SET id_estado_accion = 1,
+                        comentarios = 'No se informa formato de factura',
+                        fecha_ejecucion_ini = current_date,
+                        fecha_ejecucion_fin = current_date
+                    WHERE id_accion = 1;
+                ELSE
+                    -- Verificar si la cuenta existe
+                    PERFORM 1 FROM cuenta WHERE id_cuenta = _id_cuenta;
+                    IF NOT FOUND THEN
+                        -- Actualizar datos en la tabla accion si la cuenta no existe
+                        UPDATE accion
+                        SET id_estado_accion = 1,
+                            comentarios = 'La cuenta proporcionada no existe',
+                            fecha_ejecucion_ini = current_date,
+                            fecha_ejecucion_fin = current_date
+                        WHERE id_accion = 1;
+                    ELSE
+                        -- Insertar en la tabla si todas las condiciones son satisfactorias
+                        INSERT INTO domicilio (
+                            id_domicilio,
+                            direccion_dom,
+                            fecha_alta_dom,
+                            fecha_baja_dom,
+                            id_baja,
+                            id_tipo_dom,
+                            id_formato_fact,
+                            id_estructura,
+                            id_cuenta
+                        ) VALUES (
+                            _id_domicilio,
+                            _direccion_dom,
+                            _fecha_alta_dom,
+                            _fecha_baja_dom,
+                            _id_baja,
+                            _id_tipo_dom,
+                            _id_formato_fact,
+                            _id_estructura,
+                            _id_cuenta
+                        );
+                        
+                        -- Actualizar datos en la tabla accion para indicar éxito
+                        UPDATE accion
+                        SET id_estado_accion = 3,
+                            comentarios = 'Domicilio creado correctamente',
+                            fecha_ejecucion_ini = current_date,
+                            fecha_ejecucion_fin = current_date
+                        WHERE id_accion = 1;
+                    END IF;
+                END IF;
             END IF;
         END IF;
     END IF;
 END;
 $$;
+
 
 CALL insertar_domicilio(6, 'AV EVERGREEN' , CURRENT_DATE, NULL, NULL, 1, 1, 1);
 
