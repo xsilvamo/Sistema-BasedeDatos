@@ -192,6 +192,20 @@ CREATE TABLE situacion(
 	desc_situacion VARCHAR(1000)
 );
 
+CREATE TABLE cuenta(
+	id_cuenta INT PRIMARY KEY,
+	direccion_cuenta VARCHAR(100),
+	correo_elect VARCHAR(100),
+	fecha_alta_cuenta DATE,
+	fecha_baja_cuenta DATE,
+	id_baja INT,
+	id_estado_cuenta INT,
+	id_cliente INT,
+	FOREIGN KEY (id_baja) REFERENCES causa_baja(id_baja),
+	FOREIGN KEY (id_estado_cuenta) REFERENCES estado_cuenta(id_estado_cuenta),
+	FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
+);
+
 CREATE TABLE domicilio(
 	id_domicilio INT PRIMARY KEY,
 	direccion_dom VARCHAR(100),
@@ -209,19 +223,6 @@ CREATE TABLE domicilio(
 	FOREIGN KEY (id_cuenta) REFERENCES cuenta(id_cuenta)
 );
 
-CREATE TABLE cuenta(
-	id_cuenta INT PRIMARY KEY,
-	direccion_cuenta VARCHAR(100),
-	correo_elect VARCHAR(100),
-	fecha_alta_cuenta DATE,
-	fecha_baja_cuenta DATE,
-	id_baja INT,
-	id_estado_cuenta INT,
-	id_cliente INT,
-	FOREIGN KEY (id_baja) REFERENCES causa_baja(id_baja),
-	FOREIGN KEY (id_estado_cuenta) REFERENCES estado_cuenta(id_estado_cuenta),
-	FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
-);
 
 CREATE TABLE estado_domicilio(
 	id_domicilio INT,
