@@ -1,0 +1,268 @@
+-- DEFINICION DE PK
+
+ALTER TABLE tipo_estructura
+ADD CONSTRAINT pk_tipo_estructura PRIMARY KEY (id_tipo_estructura);
+
+ALTER TABLE divisa
+ADD CONSTRAINT pk_divisa PRIMARY KEY (id_divisa);
+
+ALTER TABLE estructura_territorial
+ADD CONSTRAINT pk_estructura_territorial PRIMARY KEY (id_estructura);
+
+ALTER TABLE causa_baja
+ADD CONSTRAINT pk_causa_baja PRIMARY KEY (id_baja);
+
+ALTER TABLE tipo_cedula
+ADD CONSTRAINT pk_tipo_cedula PRIMARY KEY (id_tipo_cedula);
+
+ALTER TABLE tipo_cliente
+ADD CONSTRAINT pk_tipo_cliente PRIMARY KEY (id_tipo_cliente);
+
+ALTER TABLE estado_cliente
+ADD CONSTRAINT pk_estado_cliente PRIMARY KEY (id_estado_cli);
+
+ALTER TABLE cliente
+ADD CONSTRAINT pk_cliente PRIMARY KEY (id_cliente);
+
+ALTER TABLE estado_cuenta
+ADD CONSTRAINT pk_estado_cuenta PRIMARY KEY (id_estado_cuenta);
+
+ALTER TABLE tipo_accion
+ADD CONSTRAINT pk_tipo_accion PRIMARY KEY (id_tipo_accion);
+
+ALTER TABLE estado_accion
+ADD CONSTRAINT pk_estado_accion PRIMARY KEY (id_estado_accion);
+
+ALTER TABLE vendedor
+ADD CONSTRAINT pk_vendedor PRIMARY KEY (id_vendedor);
+
+ALTER TABLE accion
+ADD CONSTRAINT pk_accion PRIMARY KEY (id_accion);
+
+ALTER TABLE sucursal
+ADD CONSTRAINT pk_sucursal PRIMARY KEY (id_sucursal);
+
+ALTER TABLE vigencia_vendedor
+ADD CONSTRAINT pk_vigencia_vendedor PRIMARY KEY (id_sucursal, id_vendedor);
+
+ALTER TABLE precio
+ADD CONSTRAINT pk_precio PRIMARY KEY (id_precio, fecha_inicio_precio);
+
+ALTER TABLE tipo_articulo
+ADD CONSTRAINT pk_tipo_articulo PRIMARY KEY (id_tipo_articulo);
+
+ALTER TABLE articulo
+ADD CONSTRAINT pk_articulo PRIMARY KEY (id_articulo);
+
+ALTER TABLE articulo_sucursal
+ADD CONSTRAINT pk_articulo_sucursal PRIMARY KEY (id_articulo, id_sucursal);
+
+ALTER TABLE articulo_pack
+ADD CONSTRAINT pk_articulo_pack PRIMARY KEY (id_articulo, id_articulo_pack);
+
+ALTER TABLE tipo_domicilio
+ADD CONSTRAINT pk_tipo_domicilio PRIMARY KEY (id_tipo_dom);
+
+ALTER TABLE tipo_plan
+ADD CONSTRAINT pk_tipo_plan PRIMARY KEY (id_tipo_plan);
+
+ALTER TABLE formato_fact
+ADD CONSTRAINT pk_formato_fact PRIMARY KEY (id_formato_fact);
+
+ALTER TABLE situacion
+ADD CONSTRAINT pk_situacion PRIMARY KEY (cod_situacion);
+
+ALTER TABLE cuenta
+ADD CONSTRAINT pk_cuenta PRIMARY KEY (id_cuenta);
+
+ALTER TABLE domicilio
+ADD CONSTRAINT pk_domicilio PRIMARY KEY (id_domicilio);
+
+ALTER TABLE estado_domicilio
+ADD CONSTRAINT pk_estado_domicilio PRIMARY KEY (id_domicilio, cod_situacion, fecha_desde);
+
+ALTER TABLE estado_simcard
+ADD CONSTRAINT pk_estado_simcard PRIMARY KEY (id_estado_sim);
+
+ALTER TABLE simcard
+ADD CONSTRAINT pk_simcard PRIMARY KEY (num_imsi);
+
+ALTER TABLE articulo_por_domicilio
+ADD CONSTRAINT pk_articulo_por_domicilio PRIMARY KEY (id_articulo, id_domicilio);
+
+ALTER TABLE stock_sucursal
+ADD CONSTRAINT pk_stock_sucursal PRIMARY KEY (id_sucursal, id_articulo);
+
+ALTER TABLE planes_atencion
+ADD CONSTRAINT pk_planes_atencion PRIMARY KEY (id_plan);
+
+ALTER TABLE contrato
+ADD CONSTRAINT pk_contrato PRIMARY KEY (id_contrato);
+
+
+-- DEFINICION DE FK
+
+
+ALTER TABLE estructura_territorial
+ADD CONSTRAINT fk_tipo_estructura
+    FOREIGN KEY (id_tipo_estructura) REFERENCES tipo_estructura(id_tipo_estructura);
+
+ALTER TABLE estructura_territorial
+ADD CONSTRAINT fk_divisa
+    FOREIGN KEY (id_divisa) REFERENCES divisa(id_divisa);
+
+ALTER TABLE estructura_territorial
+ADD CONSTRAINT fk_estructura_sup
+    FOREIGN KEY (id_estructura_sup) REFERENCES estructura_territorial(id_estructura);
+
+ALTER TABLE cliente
+ADD CONSTRAINT fk_causa_baja
+    FOREIGN KEY (id_baja) REFERENCES causa_baja(id_baja);
+
+ALTER TABLE cliente
+ADD CONSTRAINT fk_tipo_cedula
+    FOREIGN KEY (id_tipo_cedula) REFERENCES tipo_cedula(id_tipo_cedula);
+
+ALTER TABLE cliente
+ADD CONSTRAINT fk_tipo_cliente
+    FOREIGN KEY (id_tipo_cliente) REFERENCES tipo_cliente(id_tipo_cliente);
+
+ALTER TABLE cliente
+ADD CONSTRAINT fk_estado_cliente
+    FOREIGN KEY (id_estado_cli) REFERENCES estado_cliente(id_estado_cli);
+
+ALTER TABLE accion
+ADD CONSTRAINT fk_tipo_accion
+    FOREIGN KEY (id_tipo_accion) REFERENCES tipo_accion(id_tipo_accion);
+
+ALTER TABLE accion
+ADD CONSTRAINT fk_estado_accion
+    FOREIGN KEY (id_estado_accion) REFERENCES estado_accion(id_estado_accion);
+
+ALTER TABLE accion
+ADD CONSTRAINT fk_vendedor
+    FOREIGN KEY (id_vendedor) REFERENCES vendedor(id_vendedor);
+
+ALTER TABLE sucursal
+ADD CONSTRAINT fk_estructura_territorial
+    FOREIGN KEY (id_estructura) REFERENCES estructura_territorial(id_estructura);
+
+ALTER TABLE vigencia_vendedor
+ADD CONSTRAINT fk_sucursal_vigencia
+    FOREIGN KEY (id_sucursal) REFERENCES sucursal(id_sucursal);
+
+ALTER TABLE vigencia_vendedor
+ADD CONSTRAINT fk_vendedor_vigencia
+    FOREIGN KEY (id_vendedor) REFERENCES vendedor(id_vendedor);
+
+ALTER TABLE precio
+ADD CONSTRAINT fk_estructura_territorial_precio
+    FOREIGN KEY (id_estructura) REFERENCES estructura_territorial(id_estructura);
+
+ALTER TABLE articulo
+ADD CONSTRAINT fk_tipo_articulo
+    FOREIGN KEY (id_tipo_articulo) REFERENCES tipo_articulo(id_tipo_articulo);
+
+ALTER TABLE articulo
+ADD CONSTRAINT fk_precio
+    FOREIGN KEY (id_precio, fecha_inicio_precio) REFERENCES precio(id_precio, fecha_inicio_precio);
+
+ALTER TABLE articulo
+ADD CONSTRAINT fk_articulo_pack
+    FOREIGN KEY (id_articulo_pack) REFERENCES articulo(id_articulo);
+
+ALTER TABLE articulo_sucursal
+ADD CONSTRAINT fk_articulo_sucursal_articulo
+    FOREIGN KEY (id_articulo) REFERENCES articulo(id_articulo);
+
+ALTER TABLE articulo_sucursal
+ADD CONSTRAINT fk_articulo_sucursal_sucursal
+    FOREIGN KEY (id_sucursal) REFERENCES sucursal(id_sucursal);
+
+ALTER TABLE articulo_pack
+ADD CONSTRAINT fk_articulo_pack_articulo
+    FOREIGN KEY (id_articulo) REFERENCES articulo(id_articulo);
+
+ALTER TABLE articulo_pack
+ADD CONSTRAINT fk_articulo_pack_articulo_pack
+    FOREIGN KEY (id_articulo_pack) REFERENCES articulo(id_articulo);
+
+ALTER TABLE cuenta
+ADD CONSTRAINT fk_causa_baja_cuenta
+    FOREIGN KEY (id_baja) REFERENCES causa_baja(id_baja);
+
+ALTER TABLE cuenta
+ADD CONSTRAINT fk_estado_cuenta
+    FOREIGN KEY (id_estado_cuenta) REFERENCES estado_cuenta(id_estado_cuenta);
+
+ALTER TABLE cuenta
+ADD CONSTRAINT fk_cliente_cuenta
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente);
+
+ALTER TABLE domicilio
+ADD CONSTRAINT fk_tipo_domicilio
+    FOREIGN KEY (id_tipo_dom) REFERENCES tipo_domicilio(id_tipo_dom);
+
+ALTER TABLE domicilio
+ADD CONSTRAINT fk_formato_fact
+    FOREIGN KEY (id_formato_fact) REFERENCES formato_fact(id_formato_fact);
+
+ALTER TABLE domicilio
+ADD CONSTRAINT fk_estructura_territorial
+    FOREIGN KEY (id_estructura) REFERENCES estructura_territorial(id_estructura);
+
+ALTER TABLE domicilio
+ADD CONSTRAINT fk_causa_baja_domicilio
+    FOREIGN KEY (id_baja) REFERENCES causa_baja(id_baja);
+
+ALTER TABLE domicilio
+ADD CONSTRAINT fk_cuenta_domicilio
+    FOREIGN KEY (id_cuenta) REFERENCES cuenta(id_cuenta);
+
+ALTER TABLE estado_domicilio
+ADD CONSTRAINT fk_domicilio_estado_domicilio
+    FOREIGN KEY (id_domicilio) REFERENCES domicilio(id_domicilio);
+
+ALTER TABLE estado_domicilio
+ADD CONSTRAINT fk_situacion_estado_domicilio
+    FOREIGN KEY (cod_situacion) REFERENCES situacion(cod_situacion);
+
+ALTER TABLE simcard
+ADD CONSTRAINT fk_estado_simcard
+    FOREIGN KEY (id_estado_sim) REFERENCES estado_simcard(id_estado_sim);
+
+ALTER TABLE articulo_por_domicilio
+ADD CONSTRAINT fk_articulo_por_domicilio_articulo
+    FOREIGN KEY (id_articulo) REFERENCES articulo(id_articulo);
+
+ALTER TABLE articulo_por_domicilio
+ADD CONSTRAINT fk_articulo_por_domicilio_domicilio
+    FOREIGN KEY (id_domicilio) REFERENCES domicilio(id_domicilio);
+
+ALTER TABLE articulo_por_domicilio
+ADD CONSTRAINT fk_articulo_por_domicilio_simcard
+    FOREIGN KEY (num_imsi) REFERENCES simcard(num_imsi);
+
+ALTER TABLE stock_sucursal
+ADD CONSTRAINT fk_stock_sucursal_sucursal
+    FOREIGN KEY (id_sucursal) REFERENCES sucursal(id_sucursal);
+
+ALTER TABLE stock_sucursal
+ADD CONSTRAINT fk_stock_sucursal_articulo
+    FOREIGN KEY (id_articulo) REFERENCES articulo(id_articulo);
+
+ALTER TABLE planes_atencion
+ADD CONSTRAINT fk_tipo_plan_planes_atencion
+    FOREIGN KEY (id_tipo_plan) REFERENCES tipo_plan(id_tipo_plan);
+
+ALTER TABLE planes_atencion
+ADD CONSTRAINT fk_precio_planes_atencion
+    FOREIGN KEY (id_precio, fecha_inicio_precio) REFERENCES precio(id_precio, fecha_inicio_precio);
+
+ALTER TABLE planes_atencion
+ADD CONSTRAINT fk_estructura_territorial_planes_atencion
+    FOREIGN KEY (id_estructura) REFERENCES estructura_territorial(id_estructura);
+
+ALTER TABLE contrato
+ADD CONSTRAINT fk_plan_contrato
+    FOREIGN KEY (id_plan) REFERENCES planes_atencion(id_plan);
