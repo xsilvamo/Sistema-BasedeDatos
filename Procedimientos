@@ -1,3 +1,5 @@
+-- Procedimiento 1, 2, 5, 6
+
 CREATE OR REPLACE PROCEDURE insertar_domicilio(
     _id_domicilio INT,
     _direccion_dom VARCHAR,
