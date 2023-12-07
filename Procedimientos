@@ -6,7 +6,8 @@ CREATE OR REPLACE PROCEDURE insertar_domicilio(
     _id_baja INT,
     _id_tipo_dom INT,
     _id_formato_fact INT,
-    _id_estructura INT
+    _id_estructura INT,
+	_id_cuenta INT
 )
 LANGUAGE plpgsql
 AS $$
@@ -16,7 +17,9 @@ BEGIN
         -- Actualizar datos en la tabla accion si no se proporciona la dirección
         UPDATE accion
         SET id_estado_accion = 1,
-            comentarios = 'No se informa la dirección'
+            comentarios = 'No se informa la dirección',
+			fecha_ejecucion_ini = current_date,
+			fecha_ejecucion_fin = current_date
         WHERE id_accion = 1; -- Utilizamos _id_domicilio como referencia
     ELSE
         -- Verificar si se ha proporcionado id_estructura
@@ -24,7 +27,9 @@ BEGIN
             -- Actualizar datos en la tabla accion si no se proporciona id_estructura
             UPDATE accion
             SET id_estado_accion = 1,
-                comentarios = 'No se informa estructura del pais'
+                comentarios = 'No se informa estructura del pais',
+				fecha_ejecucion_ini = current_date,
+				fecha_ejecucion_fin = current_date
             WHERE id_accion = 1; -- Utilizamos _id_domicilio como referencia
         ELSE
             -- Verificar si se ha proporcionado id_tipo_dom
@@ -32,7 +37,9 @@ BEGIN
                 -- Actualizar datos en la tabla accion si no se proporciona id_tipo_dom
                 UPDATE accion
                 SET id_estado_accion = 1,
-                    comentarios = 'No se informa el tipo de domicilio'
+                    comentarios = 'No se informa el tipo de domicilio',
+					fecha_ejecucion_ini = current_date,
+					fecha_ejecucion_fin = current_date
                 WHERE id_accion = 1; -- Utilizamos _id_domicilio como referencia
             ELSE
                 -- Insertar en la tabla si todas las condiciones son satisfactorias
@@ -44,7 +51,8 @@ BEGIN
                     id_baja,
                     id_tipo_dom,
                     id_formato_fact,
-                    id_estructura
+                    id_estructura,
+					id_cuenta
                 ) VALUES (
                     _id_domicilio,
                     _direccion_dom,
@@ -53,22 +61,22 @@ BEGIN
                     _id_baja,
                     _id_tipo_dom,
                     _id_formato_fact,
-                    _id_estructura
+                    _id_estructura,
+					_id_cuenta
                 );
                 
                 -- Actualizar datos en la tabla accion para indicar éxito
                 UPDATE accion
                 SET id_estado_accion = 3,
-                    comentarios = 'Domicilio creado correctamente'
+                    comentarios = 'Domicilio creado correctamente',
+					fecha_ejecucion_ini = current_date,
+					fecha_ejecucion_fin = current_date
                 WHERE id_accion = 1;
             END IF;
         END IF;
     END IF;
 END;
 $$;
-
-
-
 
 CALL insertar_domicilio(6, 'AV EVERGREEN' , CURRENT_DATE, NULL, NULL, 1, 1, 1);
 
