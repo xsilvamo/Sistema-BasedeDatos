@@ -394,3 +394,67 @@ BEGIN
     END IF;
 END;
 $$;
+
+CREATE OR REPLACE PROCEDURE dar_alta_pack_con_precio6(
+    _id_pack INT,
+    _id_domicilio INT
+)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    _monto_pack NUMERIC;
+BEGIN
+    -- Obtener el monto del pack desde la tabla precio
+    SELECT monto INTO _monto_pack
+    FROM precio
+    WHERE id_articulo = _id_pack
+      AND fecha_inicio_precio <= current_date
+      AND (fecha_fin_precio IS NULL OR fecha_fin_precio >= current_date);
+
+    -- Verificar si el pack está configurado como opcional al plan
+    IF EXISTS (
+        SELECT 1
+        FROM articulo_pack
+        WHERE id_articulo_pack = _id_pack
+    ) THEN
+        -- Verificar si el pack ya está registrado para el domicilio
+        IF NOT EXISTS (
+            SELECT 1
+            FROM articulo_por_domicilio
+            WHERE id_articulo = _id_pack AND id_domicilio = _id_domicilio
+        ) THEN
+            -- Insertar en la tabla articulo_por_domicilio
+            INSERT INTO articulo_por_domicilio (id_articulo, id_domicilio)
+            VALUES (_id_pack, _id_domicilio);
+
+            -- Actualizar datos en la tabla accion para indicar éxito
+            UPDATE accion
+            SET id_estado_accion = 3,
+                comentarios = 'Pack dado de alta y activado correctamente en el domicilio',
+                fecha_ejecucion_ini = current_date,
+                fecha_ejecucion_fin = current_date
+            WHERE id_accion = 5; -- Utilizamos _id_pack como referencia
+
+            -- Registrar el monto a pagar por la activación del pack para la siguiente factura
+            INSERT INTO monto_a_pagar (id_domicilio, monto, fecha_inicio, id_articulo)
+            VALUES (_id_domicilio, _monto_pack, current_date, _id_pack);
+        ELSE
+            -- Actualizar datos en la tabla accion si el pack ya está registrado para el domicilio
+            UPDATE accion
+            SET id_estado_accion = 1,
+                comentarios = 'El pack ya está registrado para el domicilio',
+                fecha_ejecucion_ini = current_date,
+                fecha_ejecucion_fin = current_date
+            WHERE id_accion = 5; -- Utilizamos _id_pack como referencia
+        END IF;
+    ELSE
+        -- Actualizar datos en la tabla accion si el pack no está configurado como opcional
+        UPDATE accion
+        SET id_estado_accion = 1,
+            comentarios = 'El pack no está configurado como opcional al plan',
+            fecha_ejecucion_ini = current_date,
+            fecha_ejecucion_fin = current_date
+        WHERE id_accion = 5; -- Utilizamos _id_pack como referencia
+    END IF;
+END;
+$$;
