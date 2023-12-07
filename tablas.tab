@@ -1,0 +1,233 @@
+CREATE TABLE tipo_estructura(
+	id_tipo_estructura SERIAL,
+	tipo_estruc VARCHAR(100)
+);
+
+CREATE TABLE divisa (
+    id_divisa SERIAL,
+    nom_divisa VARCHAR(100),
+	valor INT
+);
+
+CREATE TABLE estructura_territorial (
+    id_estructura INT,
+    nom_estructura varchar(100),
+	impuesto INT,
+	id_tipo_estructura INT,
+	id_divisa INT,
+	id_estructura_sup INT
+);
+
+CREATE TABLE causa_baja(
+	id_baja SERIAL,
+	causa_baja VARCHAR(100)
+); 
+
+CREATE TABLE tipo_cedula (
+    id_tipo_cedula SERIAL,
+    nom_tipo_cedula VARCHAR(100)
+);
+
+
+CREATE TABLE tipo_cliente (
+    id_tipo_cliente SERIAL,
+    nom_tipo_cliente VARCHAR(100)
+);
+
+CREATE TABLE estado_cliente (
+    id_estado_cli SERIAL,
+    estado_cli VARCHAR(100)
+);
+
+CREATE TABLE cliente (
+    dni INT,
+    id_cliente INT,
+    nombres VARCHAR(100),
+    apellido_pat VARCHAR(100),
+    apellido_mat VARCHAR(100),
+    telefono VARCHAR(100),
+    fecha_alta_cli DATE,
+    fecha_baja_cli DATE,
+    id_baja INT,
+    id_tipo_cedula INT,
+    id_tipo_cliente INT,
+    id_estado_cli INT
+);
+
+CREATE TABLE estado_cuenta (
+    id_estado_cuenta SERIAL,
+    estado_cuenta VARCHAR(100)
+);
+
+
+CREATE TABLE tipo_accion (
+    id_tipo_accion SERIAL,
+    nom_tipo_accion VARCHAR(100)
+);
+
+
+CREATE TABLE estado_accion (
+    id_estado_accion SERIAL,
+    nom_estado_accion VARCHAR(100)
+);
+
+CREATE TABLE vendedor (
+    dni_vendedor VARCHAR(100),
+    id_vendedor INT,
+    nom_vendedor VARCHAR(100),
+    apellido_pat_ven VARCHAR(100),
+    apellido_mat_ven VARCHAR(100),
+    comisiones INT
+);
+
+CREATE TABLE accion (
+    id_accion INT,
+    fecha_inscripcion_a DATE,
+    fecha_ejecucion_ini DATE,
+    fecha_ejecucion_fin DATE,
+    comentarios VARCHAR(1000),
+    id_tipo_accion INT,
+    id_estado_accion INT,
+    id_vendedor INT
+);
+
+CREATE TABLE sucursal (
+    id_sucursal INT,
+    direc_sucursal VARCHAR(100),
+    nom_sucursal VARCHAR(100),
+    telefono_sucursal INT,
+    correo_sucursal VARCHAR(100),
+    id_estructura INT
+);
+
+CREATE TABLE vigencia_vendedor (
+    id_sucursal INT,
+    id_vendedor INT,
+    fecha_vigencia DATE
+);
+
+CREATE TABLE precio (
+    id_precio INT,
+    monto INT,
+    id_estructura INT,
+    fecha_inicio_precio DATE,
+    fecha_fin_precio DATE
+);
+
+CREATE TABLE tipo_articulo (
+    id_tipo_articulo SERIAL,
+    nom_tipo_articulo VARCHAR(40)
+);
+
+CREATE TABLE articulo (
+    id_articulo INT,
+    id_tipo_articulo INT,
+    id_precio INT,
+    fecha_inicio_precio DATE,
+    descripcion_art VARCHAR(100),
+    uso_simcard BOOLEAN,
+    id_articulo_pack INT
+);
+
+CREATE TABLE articulo_sucursal (
+    id_articulo INT,
+    id_sucursal INT
+);
+
+CREATE TABLE articulo_pack (
+    id_articulo INT,
+    id_articulo_pack INT,
+    nombre_pack VARCHAR(100)
+);
+
+
+CREATE TABLE tipo_domicilio (
+    id_tipo_dom SERIAL,
+    nom_tipo_dom VARCHAR(100)
+);
+
+CREATE TABLE tipo_plan (
+    id_tipo_plan INT,
+    nombre_plan VARCHAR(100),
+    desc_plan VARCHAR(100)
+);
+
+CREATE TABLE formato_fact (
+    id_formato_fact INT,
+    nom_formato_fact VARCHAR(100)
+);
+
+CREATE TABLE situacion (
+    cod_situacion INT,
+    nom_situacion VARCHAR(100),
+    desc_situacion VARCHAR(1000)
+);
+
+CREATE TABLE cuenta (
+    id_cuenta INT,
+    direccion_cuenta VARCHAR(100),
+    correo_elect VARCHAR(100),
+    fecha_alta_cuenta DATE,
+    fecha_baja_cuenta DATE,
+    id_baja INT,
+    id_estado_cuenta INT,
+    id_cliente INT
+);
+
+CREATE TABLE domicilio (
+    id_domicilio INT,
+    direccion_dom VARCHAR(100),
+    fecha_alta_dom DATE,
+    fecha_baja_dom DATE,
+    id_baja INT,
+    id_tipo_dom INT,
+    id_formato_fact INT,
+    id_estructura INT,
+    id_cuenta INT
+);
+
+CREATE TABLE estado_domicilio (
+    id_domicilio INT,
+    cod_situacion INT,
+    fecha_desde DATE,
+    fecha_hasta DATE
+);
+
+CREATE TABLE estado_simcard (
+    id_estado_sim INT,
+    estado_sim VARCHAR(50)
+);
+
+CREATE TABLE simcard (
+    num_imsi INT,
+    cel_asociado VARCHAR(50),
+    id_estado_sim INT
+);
+
+CREATE TABLE articulo_por_domicilio (
+    id_articulo INT,
+    id_domicilio INT,
+    num_imsi INT
+);
+
+CREATE TABLE stock_sucursal (
+    id_sucursal INT,
+    id_articulo INT
+);
+
+CREATE TABLE planes_atencion (
+    id_plan INT,
+    id_tipo_plan INT,
+    id_precio INT,
+    fecha_inicio_precio DATE,
+    id_estructura INT,
+    descripcion_plan VARCHAR(100)
+);
+
+CREATE TABLE contrato (
+    id_contrato INT,
+    tiempo_contrato VARCHAR(100),
+    fecha_inicio_contr DATE,
+    fecha_fin_contr DATE,
+    id_plan INT
+);
