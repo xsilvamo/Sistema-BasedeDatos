@@ -80,4 +80,61 @@ $$;
 
 CALL insertar_domicilio(6, 'AV EVERGREEN' , CURRENT_DATE, NULL, NULL, 1, 1, 1);
 
+CREATE OR REPLACE PROCEDURE insertar_articulo_por_domicilio(
+    _id_articulo INT,
+    _id_domicilio INT,
+	_num_imsi INT
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    -- Verificar si se ha proporcionado la dirección
+    IF _id_articulo IS NULL AND _id_domicilio IS NULL THEN
+        -- Actualizar datos en la tabla accion si no se proporciona 
+        UPDATE accion
+        SET id_estado_accion = 1,
+            comentarios = 'No se informa articulo'
+        WHERE id_accion = 2; 
+    ELSE
+        -- Verificar si se ha proporcionado id_estructura
+        IF _id_articulo IS NOT NULL AND _id_domicilio IS NULL THEN
+            -- Actualizar datos en la tabla accion si no se proporciona id_estructura
+            UPDATE accion
+            SET id_estado_accion = 1,
+                comentarios = 'No se informa domicilio'
+            WHERE id_accion = 2; -- Utilizamos _id_domicilio como referencia
+        ELSE
+            -- Verificar si se ha proporcionado id_tipo_dom
+            IF _id_baja IS NOT NULL THEN
+                -- Actualizar datos en la tabla accion si no se proporciona id_tipo_dom
+                UPDATE accion
+                SET id_estado_accion = 1,
+                    comentarios = 'El domicilio está de baja y no se puede realizar la acción'
+                WHERE id_accion = 2; -- Utilizamos _id_domicilio como referencia
+            ELSE
+                -- Insertar en la tabla si todas las condiciones son satisfactorias
+                INSERT INTO articulo_por_domicilio (
+                    id_articulo,
+                    id_domicilio,
+                    num_imsi
+                ) VALUES (
+					_id_articulo ,
+					_id_domicilio,	
+					_num_imsi 
+                );
+                
+                -- Actualizar datos en la tabla accion para indicar éxito
+                UPDATE accion
+                SET id_estado_accion = 3,
+                    comentarios = 'Articulo creado correctamente',
+					fecha_ejecucion_ini = current_date,
+					fecha_ejecucion_fin = current_date
+                WHERE id_accion = 2;
+            END IF;
+        END IF;
+    END IF;
+END;
+$$;
+
+
 
