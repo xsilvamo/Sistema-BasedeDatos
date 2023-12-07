@@ -136,5 +136,42 @@ BEGIN
 END;
 $$;
 
+--PARA DAR DE ALTA UN ARTICULO
+
+CREATE OR REPLACE PROCEDURE dar_alta_articulo_en_domicilio(
+    _id_articulo INT,
+    _id_domicilio INT
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    -- Verificar si el artículo ya está asociado al domicilio
+    IF EXISTS (
+        SELECT 1
+        FROM articulo_por_domicilio
+        WHERE id_articulo = _id_articulo AND id_domicilio = _id_domicilio
+    ) THEN
+        -- Actualizar datos en la tabla accion si el artículo ya está asociado al domicilio
+        UPDATE accion
+        SET id_estado_accion = 1,
+            comentarios = 'El domicilio ya tiene activo el mismo artículo',
+			fecha_ejecucion_ini = current_date,
+			fecha_ejecucion_fin = current_date
+        WHERE id_accion = 2; -- Utilizamos _id_articulo como referencia
+    ELSE
+        -- Insertar en la tabla articulo_por_domicilio si el artículo no está asociado al domicilio
+        INSERT INTO articulo_por_domicilio (id_articulo, id_domicilio)
+        VALUES (_id_articulo, _id_domicilio);
+        
+        -- Actualizar datos en la tabla accion para indicar éxito
+        UPDATE accion
+        SET id_estado_accion = 3,
+            comentarios = 'Artículo dado de alta correctamente en el domicilio',
+			fecha_ejecucion_ini = current_date,
+			fecha_ejecucion_fin = current_date
+        WHERE id_accion = 2; -- Utilizamos _id_articulo como referencia
+    END IF;
+END;
+$$;
 
 
