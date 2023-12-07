@@ -101,8 +101,7 @@ BEGIN
 END;
 $$;
 
-
-CALL insertar_domicilio(6, 'AV EVERGREEN' , CURRENT_DATE, NULL, NULL, 1, 1, 1);
+--
 
 CREATE OR REPLACE PROCEDURE insertar_articulo_por_domicilio(
     _id_articulo INT,
