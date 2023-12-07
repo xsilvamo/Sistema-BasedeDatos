@@ -201,10 +201,12 @@ CREATE TABLE domicilio(
 	id_tipo_dom INT,
 	id_formato_fact INT,
 	id_estructura INT,
+	id_cuenta INT,
 	FOREIGN KEY (id_tipo_dom) REFERENCES tipo_domicilio(id_tipo_dom),
 	FOREIGN KEY (id_formato_fact) REFERENCES formato_fact(id_formato_fact),
 	FOREIGN KEY (id_estructura) REFERENCES estructura_territorial(id_estructura),
-	FOREIGN KEY (id_baja) REFERENCES causa_baja(id_baja)
+	FOREIGN KEY (id_baja) REFERENCES causa_baja(id_baja),
+	FOREIGN KEY (id_cuenta) REFERENCES cuenta(id_cuenta)
 );
 
 CREATE TABLE cuenta(
@@ -216,8 +218,6 @@ CREATE TABLE cuenta(
 	id_baja INT,
 	id_estado_cuenta INT,
 	id_cliente INT,
-	id_domicilio INT,
-	FOREIGN KEY (id_domicilio) REFERENCES domicilio(id_domicilio),
 	FOREIGN KEY (id_baja) REFERENCES causa_baja(id_baja),
 	FOREIGN KEY (id_estado_cuenta) REFERENCES estado_cuenta(id_estado_cuenta),
 	FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
